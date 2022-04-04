@@ -782,6 +782,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _openBtn: {fileID: 1769889707}
   _closeBtn: {fileID: 1910690361}
+  _canvasGroup: {fileID: 0}
+  _rectTrm: {fileID: 0}
 --- !u!225 &1851584182
 CanvasGroup:
   m_ObjectHideFlags: 0

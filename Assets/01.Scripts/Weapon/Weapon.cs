@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class Weapon : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected WeaponDataSO _weaponData;
     [SerializeField] protected GameObject _muzzle; //총구의 위치
     [SerializeField] protected Transform _shellEjectPos; //탄피 생성 지점
+
+    [SerializeField] protected bool _isEnemyWeapon = false;
     #endregion
 
     #region Ammo관련 코드
@@ -95,8 +98,27 @@ public class Weapon : MonoBehaviour
 
     private void ShootBullet()
     {
-        Debug.Log("발사");
+        //Debug.Log("발사");
+        SpawnBullet(_muzzle.transform.position, CalculateAngle(_muzzle), _isEnemyWeapon);
     }
+
+    //발사시에 총알의 랜덤떨림에 따라서 발사각을 계산해주는 함수
+    private Quaternion CalculateAngle(GameObject muzzle)
+    {
+        float spread = Random.Range(-_weaponData.spreadAngle, _weaponData.spreadAngle);
+        //Quaternion.AngleAxis(spread, Vector3.forward);
+        Quaternion spreadRot = Quaternion.Euler(new Vector3(0, 0, spread));
+        return muzzle.transform.rotation * spreadRot;
+    }
+
+    private void SpawnBullet(Vector3 pos, Quaternion rot, bool isEnemyBullet)
+    {
+        Bullet b = PoolManager.Instance.Pop(_weaponData.bulletData.prefab.name) as Bullet;
+        b.SetPositionAndRotation(pos, rot);
+        b.IsEnemy = isEnemyBullet;
+        b.BulletData = _weaponData.bulletData;
+    }
+
 
     //사격 가능하다면 사격 시작
     public void TryShooting()

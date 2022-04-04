@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AssultRifleData
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
+  bulletData: {fileID: 11400000, guid: ce5ab55e6c99546428588cf34e17fde6, type: 2}
   ammoCapacity: 50
   automaticFire: 1
   weaponDelay: 0.1

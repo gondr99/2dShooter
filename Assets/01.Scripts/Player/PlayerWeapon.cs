@@ -10,10 +10,12 @@ public class PlayerWeapon : AgentWeapon
 
     //디버그용 코드 삭제할 예정
     [SerializeField] private PoolableMono _bulletPrefab;
+    [SerializeField] private PoolableMono _impactPrefab;
 
     protected void Start()
     {
         //디버그용 코드. 삭제할 예정
         PoolManager.Instance.CreatePool(_bulletPrefab, 20);
+        PoolManager.Instance.CreatePool(_impactPrefab, 20);
     }
 }

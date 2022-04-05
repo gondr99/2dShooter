@@ -45,6 +45,8 @@ public class Weapon : MonoBehaviour
     private void Awake()
     {
         _ammo = _weaponData.ammoCapacity;
+        WeaponAudio audio = transform.Find("WeaponAudio").GetComponent<WeaponAudio>();
+        audio.SetAudioClip(_weaponData.shootClip, _weaponData.outOfAmmoClip, _weaponData.reloadClip);
     }
 
     private void Update()

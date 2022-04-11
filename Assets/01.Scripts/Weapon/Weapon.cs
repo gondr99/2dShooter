@@ -13,6 +13,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected Transform _shellEjectPos; //탄피 생성 지점
 
     [SerializeField] protected bool _isEnemyWeapon = false;
+
+    public WeaponDataSO WeaponData { get => _weaponData; }
     #endregion
 
     #region Ammo관련 코드

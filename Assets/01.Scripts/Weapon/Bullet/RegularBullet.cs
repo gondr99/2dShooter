@@ -98,7 +98,13 @@ public class RegularBullet : Bullet
 
     private void HitObstacle(Collider2D collider)
     {
-        Debug.Log(collider.gameObject.transform.position);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 10f);
+        if(hit.collider != null)
+        {
+            ImpactScript impact = PoolManager.Instance.Pop(_bulletData.impactObstaclePrefab.name) as ImpactScript;
+            Quaternion rot = Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360f)) );
+            impact.SetPositionAndRotation(hit.point + (Vector2)transform.right * 0.5f, rot);
+        }
         //벽에 맞았을 때 랜덤한 회전값으로 회전된 ImpactObject 생성되서 충돌위치에 정확하게 나타나고 사라진다.
     }
 

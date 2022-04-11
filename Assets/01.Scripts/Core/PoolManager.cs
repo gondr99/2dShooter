@@ -2,26 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
-{
-    // ÄÃ·º¼Ç List, Dictionary(Map), Stack, Queue
-    
-    public static PoolManager Instance;
+public class PoolManager
+{    
+    public static PoolManager Instance = null;
 
     private Dictionary<string, Pool<PoolableMono>> _pools = new Dictionary<string, Pool<PoolableMono>>();
 
-    private void Awake()
+    private Transform _trmParent;
+    
+    public PoolManager(Transform trmParent)
     {
-        if(Instance != null)
-        {
-            Debug.LogError("Multiple PoolManager is running!");
-        }
-        Instance = this;
+        _trmParent = trmParent;
+        //Instance = this;
     }
-    // bullet 
+
     public void CreatePool(PoolableMono prefab, int count = 10)
     {
-        Pool<PoolableMono> pool = new Pool<PoolableMono>(prefab, transform, count);
+        Pool<PoolableMono> pool = new Pool<PoolableMono>(prefab, _trmParent, count);
         _pools.Add(prefab.gameObject.name, pool);
     }
     

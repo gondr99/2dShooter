@@ -10,6 +10,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Texture2D cursorTexture = null;
     [SerializeField] private PoolingListSO _initList = null;
 
+    private Transform _playerTrm;
+
+    public Transform PlayerTrm
+    {
+        get
+        {
+            if(_playerTrm == null)
+            {
+                //나중에 플레이어 스크립트 만들면 타입으로 변경할께
+                _playerTrm = GameObject.FindGameObjectWithTag("Player").transform;
+            }
+            return _playerTrm;
+        }
+    }
+
     private void Awake()
     {
         if (Instance != null)

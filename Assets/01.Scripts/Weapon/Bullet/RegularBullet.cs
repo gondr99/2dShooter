@@ -96,9 +96,10 @@ public class RegularBullet : Bullet
 
     }
 
+    
     private void HitObstacle(Collider2D collider)
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 10f);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 10f, 1 << _obstacleLayer);
         if(hit.collider != null)
         {
             ImpactScript impact = PoolManager.Instance.Pop(_bulletData.impactObstaclePrefab.name) as ImpactScript;

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5740403575543398411}
   - component: {fileID: 5740403575543398410}
   - component: {fileID: 1824335672172607356}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RegularBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,3 +156,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletData: {fileID: 0}
   damageFactor: 1
+  aaa:
+    serializedVersion: 2
+    m_Bits: 448

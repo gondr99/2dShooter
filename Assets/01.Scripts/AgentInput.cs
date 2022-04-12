@@ -7,14 +7,14 @@ using static Define;
 
 // https://github.com/gondr99/2dShooter.git
 
-public class AgentInput : MonoBehaviour
+public class AgentInput : MonoBehaviour, IAgentInput
 {
-    public UnityEvent<Vector2> OnMovementKeyPress;
-    public UnityEvent<Vector2> OnPointerPositionChanged;
+    [field: SerializeField] public UnityEvent<Vector2> OnMovementKeyPress { get; set; }
+    [field: SerializeField] public UnityEvent<Vector2> OnPointerPositionChanged { get; set; }
 
     //´Ü¹ßÇü ÃÑ, 
-    public UnityEvent OnFireButtonPress;
-    public UnityEvent OnFireButtonRelease;
+    [field: SerializeField] public UnityEvent OnFireButtonPress { get; set; }
+    [field: SerializeField]public UnityEvent OnFireButtonRelease { get; set; }
 
     public UnityEvent OnReloadButtonPress = null;
 

@@ -17,7 +17,7 @@ MonoBehaviour:
   ammoCapacity: 50
   automaticFire: 1
   weaponDelay: 0.1
-  spreadAngle: 5
+  spreadAngle: 6
   _multiBulletShoot: 0
   _bulletCount: 1
   damageFactor: 1

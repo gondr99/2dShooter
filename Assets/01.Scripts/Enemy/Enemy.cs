@@ -34,6 +34,7 @@ public class Enemy : PoolableMono, IAgent, IHittable
 
         if(critical <= GameManager.Instance.criticalChance)
         {
+            
             float ratio = Random.Range(GameManager.Instance.criticalMinDamage, 
                 GameManager.Instance.criticalMaxDamage);
             damage = Mathf.CeilToInt((float)damage * ratio);
@@ -46,6 +47,9 @@ public class Enemy : PoolableMono, IAgent, IHittable
         OnGetHit?.Invoke(); //피격 피드백 재생
 
         //여기에 데미지 숫자 띄워주는 로직이 들어가야 한다.
+        DamagePopup popup = PoolManager.Instance.Pop("DamagePopup") as DamagePopup;
+        popup.Setup(damage, transform.position + new Vector3(0,0.5f,0), isCritical);
+
 
         if(Health <= 0)
         {

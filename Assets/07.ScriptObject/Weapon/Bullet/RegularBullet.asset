@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RegularBullet
   m_EditorClassIdentifier: 
   prefab: {fileID: 5740403575543398405, guid: d563d827145aedd44b484473ae299c71, type: 3}
-  damage: 2
+  damage: 1
   bulletSpeed: 20
   explosionRadius: 0
   sprite: {fileID: -6051064961186182539, guid: 4f4e95b34d9c7f842a2a810504f24617, type: 3}

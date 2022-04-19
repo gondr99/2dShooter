@@ -51,4 +51,9 @@ public class GameManager : MonoBehaviour
             new Vector2(cursorTexture.width / 2f, cursorTexture.height / 2f),
             CursorMode.Auto);
     }
+
+    //나중에 지울 임시값입니다.
+    public float criticalChance = 0.3f; //30퍼 확률로 크리티컬
+    public float criticalMinDamage = 1.5f; //크리티컬 최소 뎀
+    public float criticalMaxDamage = 2.5f; //크리티컬 맥스뎀
 }

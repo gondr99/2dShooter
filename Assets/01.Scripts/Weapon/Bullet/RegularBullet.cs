@@ -93,7 +93,12 @@ public class RegularBullet : Bullet
 
     private void HitEnemy(Collider2D collider)
     {
-
+        IHittable hittable = collider.GetComponent<IHittable>();
+        if(hittable != null && hittable.IsEnemy == IsEnemy)
+        {
+            return; //총알과 피격체의 피아식별이 같을 경우 아군피격
+        }
+        hittable?.GetHit(damage: _bulletData.damage * damageFactor, damageDealer: gameObject);
     }
 
     

@@ -34,6 +34,9 @@ public class GameManager : MonoBehaviour
         PoolManager.Instance =  new PoolManager(transform); //풀매니저 생성
 
         //여기다 각종 매니저 로직을 넣을꺼야
+        GameObject timeController = new GameObject("TimeController");
+        timeController.transform.parent = transform.parent;
+        TimeController.instance = timeController.AddComponent<TimeController>();
 
         SetCursorIcon();
         CreatePool();

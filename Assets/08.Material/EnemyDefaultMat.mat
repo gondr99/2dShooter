@@ -37,7 +37,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Boolean_088b08f2a54945b79d2a5552a25eae5e: 0
-    - _Dissolve: 0.39
+    - _Dissolve: 1
     - _DissolveOutline: 0.05
     - _MakeSolidColor: 0
     - _NoiseScale: 20

@@ -230,6 +230,7 @@ GameObject:
   - component: {fileID: 2140790616}
   - component: {fileID: 2140790614}
   - component: {fileID: 2140790615}
+  - component: {fileID: 2140790617}
   m_Layer: 7
   m_Name: FeedbackHit
   m_TagString: Untagged
@@ -265,6 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _feedbackToPlay:
   - {fileID: 2140790615}
+  - {fileID: 2140790617}
 --- !u!114 &2140790615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,6 +281,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _flashTime: 0.1
   _flashMat: {fileID: 2100000, guid: d18d92016aec6264b8d168f6ee6cc50e, type: 2}
+--- !u!114 &2140790617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140790613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b52f0c4ae86d2e4aa5a6a58b29d4b11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _freezeTimeDelay: 0.05
+  _unFreezeTimeDelay: 0.02
+  _timeFreezeValue: 0.2
 --- !u!1 &8888691203262197612
 GameObject:
   m_ObjectHideFlags: 0

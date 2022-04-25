@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: EnemyGrowler
   prefab: {fileID: 8888691204569930821, guid: 7a6a14e99b2a9274db0768aa9ec04d61, type: 3}
   poolPrefab: {fileID: 0}
-  maxHealth: 50
+  maxHealth: 10
   knockbackRegist: 0
   damage: 1
   attackDelay: 1

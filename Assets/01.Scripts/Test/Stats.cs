@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class Stats
@@ -10,36 +11,76 @@ public class Stats
     public static int STAT_MIN = 0;
     public static int STAT_MAX = 20;
 
-    private int _attackStat;
+    private SingleStat _attackStat;
+    private SingleStat _defenceStat;
     
-    public Stats(int amount)
+    public enum Type
     {
-        SetAttackStatAmount(amount);
+        Attack,
+        Defence
+    }
+    
+    public Stats(int atkAmount, int defAmount)
+    {
+        _attackStat = new SingleStat(atkAmount);
+        _defenceStat = new SingleStat(defAmount);
     }
 
-    public void SetAttackStatAmount(int amount)
+    public int GetStatAmount(Type statType)
     {
-        _attackStat = Mathf.Clamp( amount, STAT_MIN, STAT_MAX);
+        return GetSingleStat(statType).GetStatAmount();
+    }
+
+    private SingleStat GetSingleStat(Type statType)
+    {
+        String statFieldName = $"_{statType.ToString().ToLower()}Stat";
+        FieldInfo fInfo = this.GetType().GetField(statFieldName, 
+                                BindingFlags.Instance | BindingFlags.NonPublic);
+        SingleStat s = fInfo.GetValue(this) as SingleStat;
+        return s;
+    }
+    public void SetStatAmount(Type statType, int amount)
+    {
+        GetSingleStat(statType).SetStatAmount(amount);
         OnStatChanged?.Invoke();
     }
 
-    public int GetAttackStatAmount()
+    public float GetStatAmountNormalized(Type statType)
     {
-        return _attackStat;
+        return GetSingleStat(statType).GetStatAmountNormalize();
     }
 
-    public float GetAttackStatAmountNormalize()
+    public void IncStatAmount(Type statType)
     {
-        return (float)_attackStat / STAT_MAX;
+        SetStatAmount(statType, GetStatAmount(statType) + 1);
     }
 
-    public void IncStatAmount()
+    public void DecStatAmount(Type statType)
     {
-        SetAttackStatAmount(_attackStat + 1);
+        SetStatAmount(statType, GetStatAmount(statType) - 1);
     }
 
-    public void DecStatAmount()
+    private class SingleStat
     {
-        SetAttackStatAmount(_attackStat - 1);
+        private int _stat;
+        public SingleStat(int amount)
+        {
+            SetStatAmount(amount);
+        }
+
+        public void SetStatAmount(int amount)
+        {
+            _stat = Mathf.Clamp(amount, STAT_MIN, STAT_MAX);
+        }
+
+        public int GetStatAmount()
+        {
+            return _stat;
+        }
+
+        public float GetStatAmountNormalize()
+        {
+            return (float)_stat / STAT_MAX;
+        }
     }
 }

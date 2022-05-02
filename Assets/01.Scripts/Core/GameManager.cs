@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Texture2D cursorTexture = null;
     [SerializeField] private PoolingListSO _initList = null;
+    
 
     private Transform _playerTrm;
 

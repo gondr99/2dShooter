@@ -18,7 +18,7 @@ public class FlashLightFeedback : FeedBack
 
     public override void CreateFeedBack()
     {
-        StartCoroutine(ToggleLightCoroutine(_lightOffDelay, true, () => {
+        StartCoroutine(ToggleLightCoroutine(_lightOnDelay, true, () => {
             StartCoroutine(ToggleLightCoroutine(_lightOffDelay, false));
         }));
     }

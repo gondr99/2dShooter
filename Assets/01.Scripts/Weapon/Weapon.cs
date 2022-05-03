@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-public class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviour, IRangeWeapon
 {
     #region 총 데이터
     [SerializeField] protected WeaponDataSO _weaponData;
@@ -15,6 +15,11 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected bool _isEnemyWeapon = false;
 
     public WeaponDataSO WeaponData { get => _weaponData; }
+    #endregion
+
+    #region 웨폰 렌더러 관련
+    private WeaponRenderer _weaponRenderer;
+    public WeaponRenderer Renderer { get => _weaponRenderer; }
     #endregion
 
     #region Ammo관련 코드
@@ -49,6 +54,10 @@ public class Weapon : MonoBehaviour
         _ammo = _weaponData.ammoCapacity;
         WeaponAudio audio = transform.Find("WeaponAudio").GetComponent<WeaponAudio>();
         audio.SetAudioClip(_weaponData.shootClip, _weaponData.outOfAmmoClip, _weaponData.reloadClip);
+
+        //여기다가는 무기 드랍관련 정보를 넣어야 합니다.
+
+        _weaponRenderer = GetComponent<WeaponRenderer>();
     }
 
     private void Update()
@@ -133,5 +142,31 @@ public class Weapon : MonoBehaviour
     public void StopShooting()
     {
         _isShooting = false;
+    }
+
+    public Vector3 GetRightDirection()
+    {
+        return transform.right;
+    }
+
+    public Vector3 GetFirePosition()
+    {
+        return _muzzle.transform.position;
+    }
+
+    public Vector3 GetShellEjectPosition()
+    {
+        return _shellEjectPos.position;
+    }
+
+    public Vector3 GetEjectDirection()
+    {
+        if(transform.localScale.y < 0)
+        {
+            return (transform.right * -0.5f + transform.up).normalized;
+        }else
+        {
+            return (transform.right * 0.5f + transform.up).normalized * -1;
+        }
     }
 }

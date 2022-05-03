@@ -5,8 +5,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using static Define;
 
-// https://github.com/gondr99/2dShooter.git
-
 public class AgentInput : MonoBehaviour, IAgentInput
 {
     [field: SerializeField] public UnityEvent<Vector2> OnMovementKeyPress { get; set; }
@@ -14,11 +12,12 @@ public class AgentInput : MonoBehaviour, IAgentInput
 
     //´Ü¹ßÇü ÃÑ, 
     [field: SerializeField] public UnityEvent OnFireButtonPress { get; set; }
-    [field: SerializeField]public UnityEvent OnFireButtonRelease { get; set; }
+    [field: SerializeField] public UnityEvent OnFireButtonRelease { get; set; }
 
     public UnityEvent OnReloadButtonPress = null;
-
     private bool _fireButtonDown = false;
+
+    [field: SerializeField] public UnityEvent OnDropButtonPress { get; set; }
 
     private void Update()
     {
@@ -26,6 +25,16 @@ public class AgentInput : MonoBehaviour, IAgentInput
         GetPointerInput();
         GetFireInput();
         GetReloadInput();
+
+        GetDropInput();
+    }
+
+    private void GetDropInput()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            OnDropButtonPress?.Invoke();
+        }
     }
 
     private void GetReloadInput()

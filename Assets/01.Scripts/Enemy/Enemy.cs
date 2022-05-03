@@ -32,11 +32,11 @@ public class Enemy : PoolableMono, IAgent, IHittable
         float critical = Random.value; // 0 ~ 1 
         bool isCritical = false;
 
-        if(critical <= GameManager.Instance.criticalChance)
+        if(critical <= GameManager.Instance.CriticalChance)
         {
             
-            float ratio = Random.Range(GameManager.Instance.criticalMinDamage, 
-                GameManager.Instance.criticalMaxDamage);
+            float ratio = Random.Range(GameManager.Instance.CriticalMinDamage, 
+                GameManager.Instance.CriticalMaxDamage);
             damage = Mathf.CeilToInt((float)damage * ratio);
             isCritical = true;
         }

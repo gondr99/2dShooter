@@ -231,6 +231,7 @@ GameObject:
   - component: {fileID: 2140790614}
   - component: {fileID: 2140790615}
   - component: {fileID: 2140790617}
+  - component: {fileID: 1359691339}
   m_Layer: 7
   m_Name: FeedbackHit
   m_TagString: Untagged
@@ -267,6 +268,7 @@ MonoBehaviour:
   _feedbackToPlay:
   - {fileID: 2140790615}
   - {fileID: 2140790617}
+  - {fileID: 1359691339}
 --- !u!114 &2140790615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,6 +298,19 @@ MonoBehaviour:
   _freezeTimeDelay: 0.05
   _unFreezeTimeDelay: 0.02
   _timeFreezeValue: 0.2
+--- !u!114 &1359691339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2140790613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da8d209237472147b774291d9853373, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _randomRange: 0.3
 --- !u!1 &8888691203262197612
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,7 +1288,7 @@ MonoBehaviour:
   - {x: -0.14946365, y: -0.008002758, z: 0}
   m_ShapePathHash: -1050891923
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1298
+  m_InstanceId: -1306
 --- !u!114 &8888691204575810301
 MonoBehaviour:
   m_ObjectHideFlags: 0

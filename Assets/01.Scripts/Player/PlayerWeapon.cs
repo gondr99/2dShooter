@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,8 +31,18 @@ public class PlayerWeapon : AgentWeapon
     }
 
     private AudioSource _audioSource;
+
+    private Weapon _currentWeapon = null; //현재 무기
+
     private bool _isReloading = false;
     public bool IsReloading { get => _isReloading; }
+
+    public override void AssignWeapon()
+    {
+        if (_currentWeapon == null) return;
+        _weapon = _currentWeapon;
+        _weaponRenderer = _weapon.Renderer;
+    }
 
     protected override void AwakeChild()
     {
@@ -40,6 +51,10 @@ public class PlayerWeapon : AgentWeapon
 
     protected void Start()
     {
+        //이건 차후에 수정할 꺼야.
+        _currentWeapon = transform.Find("assault_rifle").GetComponent<Weapon>();
+        AssignWeapon();
+
         OnChangeTotalAmmo?.Invoke(_totalAmmo, _maxTotalAmmo);
     }
 
@@ -99,5 +114,38 @@ public class PlayerWeapon : AgentWeapon
             return;
         }
         base.Shoot();
+    }
+
+    //이 함수는 x키를 눌렀을 때 실행됩니다. 
+    public void AddWeapon()
+    {
+        /*3가지 경우
+        1 . 땅에 떨어진 무기가 있고, 그 위에 플레이어가 있고, 내가지금 무기를 안들고 있어.
+        => 이러면 줍는다.
+        2. 땅에 떨어진 무기가 있고, 내가 지금 무기를 들고 있어 
+        => 내가 들고 있는 건 버리고, 땅에 떨어진 건 줍는다.
+        3. 땅에 떨어진 무기도 없고 내가 지금 무기를 들고 있다면 
+        => 버린다.
+        */
+
+        if(_currentWeapon != null)
+        {
+            DropWeapon(_currentWeapon);
+        }
+    }
+
+    private void DropWeapon(Weapon weapon)
+    {
+        _weapon = null;
+        _currentWeapon = null;
+        weapon.transform.parent = null; //월드에다가 던져버린다.
+
+        //총을 던질때는 총구방향으로 던지도록 코드를 작성할께
+        Vector3 targetPosition = weapon.GetRightDirection() * 0.5f 
+                                            + weapon.transform.position;
+        weapon.transform.rotation = Quaternion.identity;
+        weapon.transform.localScale = Vector3.one;
+
+        weapon.transform.DOMove(targetPosition, 0.5f);
     }
 }

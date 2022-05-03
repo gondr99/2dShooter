@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Texture2D cursorTexture = null;
     [SerializeField] private PoolingListSO _initList = null;
-    
+    [SerializeField] private TextureParticleManager _textureParticleManagerPrefab;
 
     private Transform _playerTrm;
 
@@ -25,6 +25,16 @@ public class GameManager : MonoBehaviour
             return _playerTrm;
         }
     }
+    public Player _player;
+    public AgentStatusSO PlayerStatus
+    {
+        get
+        {
+            if (_player == null)
+                _player = PlayerTrm.GetComponent<Player>();
+            return _player.PlayerStatus;
+        }
+    }
 
     private void Awake()
     {
@@ -38,6 +48,8 @@ public class GameManager : MonoBehaviour
         GameObject timeController = new GameObject("TimeController");
         timeController.transform.parent = transform.parent;
         TimeController.instance = timeController.AddComponent<TimeController>();
+
+        Instantiate(_textureParticleManagerPrefab, transform.parent);
 
         SetCursorIcon();
         CreatePool();
@@ -56,8 +68,9 @@ public class GameManager : MonoBehaviour
             CursorMode.Auto);
     }
 
-    //나중에 지울 임시값입니다.
-    public float criticalChance = 0.3f; //30퍼 확률로 크리티컬
-    public float criticalMinDamage = 1.5f; //크리티컬 최소 뎀
-    public float criticalMaxDamage = 2.5f; //크리티컬 맥스뎀
+    public float CriticalChance { get => PlayerStatus.critical; }
+    public float CriticalMinDamage { get => PlayerStatus.criticalMinDmg; }
+    public float CriticalMaxDamage { get => PlayerStatus.criticalMaxDmg; }
+
+
 }

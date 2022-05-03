@@ -43,6 +43,18 @@ public class TextureParticleManager : MonoBehaviour
         }
     }
 
+    public void SpawnShell(Vector3 pos, Vector3 dir)
+    {
+        int uvIndex = _meshPS.GetRandomShellIndex();
+        float moveSpeed = Random.Range(1.5f, 2.5f);
+        Vector3 quadSize = new Vector3(0.15f, 0.15f);
+        float slowDownFactor = Random.Range(2f, 2.5f);
+
+        _shellList.Add(
+            new Particle(pos, dir, _meshPS, uvIndex, moveSpeed, 
+                        quadSize, slowDownFactor, true));
+    }
+
     public void SpawnBlood(Vector3 pos, Vector3 dir)
     {
         int uvIndex = _meshPS.GetRandomBloodIndex();

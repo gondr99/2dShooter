@@ -8,6 +8,9 @@ using UnityEngine.Events;
 public class PlayerWeapon : AgentWeapon
 {
     //나중에 플레이어만을 위한 무기교체, 무기드랍, 무기얻기 코드가 여기 들어옵니다.
+    #region 무기드랍 및 교체 로직
+    public DroppedWeapon dropWeapon = null;
+    #endregion
 
     [field : SerializeField]
     public UnityEvent<int, int> OnChangeTotalAmmo { get; set; }  //현재값, 최대값
@@ -128,9 +131,25 @@ public class PlayerWeapon : AgentWeapon
         => 버린다.
         */
 
+        //3번 케이스
         if(_currentWeapon != null)
         {
             DropWeapon(_currentWeapon);
+        }
+
+        //1,2번 케이스
+        if(dropWeapon != null)
+        {
+            Vector3 offset = new Vector3(0.5f, 0, 0);
+
+            dropWeapon.transform.parent = transform;
+            dropWeapon.transform.localPosition = offset;
+            dropWeapon.transform.localRotation = Quaternion.identity;
+
+            _currentWeapon = _weapon = dropWeapon.weapon;
+
+            dropWeapon.PickUpWeapon();
+            dropWeapon = null;
         }
     }
 
@@ -141,11 +160,14 @@ public class PlayerWeapon : AgentWeapon
         weapon.transform.parent = null; //월드에다가 던져버린다.
 
         //총을 던질때는 총구방향으로 던지도록 코드를 작성할께
-        Vector3 targetPosition = weapon.GetRightDirection() * 0.5f 
+        Vector3 targetPosition = weapon.GetRightDirection() * 0.3f 
                                             + weapon.transform.position;
         weapon.transform.rotation = Quaternion.identity;
         weapon.transform.localScale = Vector3.one;
 
-        weapon.transform.DOMove(targetPosition, 0.5f);
+        weapon.transform.DOMove(targetPosition, 0.5f).OnComplete(()=>
+        {
+            weapon.droppedWeapon.IsActive = true;
+        });
     }
 }

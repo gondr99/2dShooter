@@ -49,13 +49,20 @@ public class Weapon : MonoBehaviour, IRangeWeapon
     [SerializeField] protected bool _delayCoroutine = false;
     #endregion
 
+    #region 웨폰 드랍관련 로직
+    private DroppedWeapon _droppedWeapon;
+    public DroppedWeapon droppedWeapon { get => _droppedWeapon; }
+    #endregion
+
     private void Awake()
     {
         _ammo = _weaponData.ammoCapacity;
         WeaponAudio audio = transform.Find("WeaponAudio").GetComponent<WeaponAudio>();
         audio.SetAudioClip(_weaponData.shootClip, _weaponData.outOfAmmoClip, _weaponData.reloadClip);
 
-        //여기다가는 무기 드랍관련 정보를 넣어야 합니다.
+        //무기 드랍관련한 정보를 가져오고 false로 설정한다.
+        _droppedWeapon = GetComponent<DroppedWeapon>();
+        _droppedWeapon.IsActive = false;
 
         _weaponRenderer = GetComponent<WeaponRenderer>();
     }

@@ -40,6 +40,11 @@ public class Player : MonoBehaviour, IAgent, IHittable
         }
     }
 
+    public PlayerWeapon playerWeapon
+    {
+        get => _playerWeapon;
+    }
+
     private void Awake()
     {
         _playerWeapon = transform.Find("WeaponParent").GetComponent<PlayerWeapon>();

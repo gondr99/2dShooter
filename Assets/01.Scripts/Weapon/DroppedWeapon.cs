@@ -41,6 +41,11 @@ public class DroppedWeapon : MonoBehaviour
         if (IsActive == false) return;
         if(collision.gameObject.CompareTag("Player"))
         {
+            Player p = collision.gameObject.GetComponent<Player>();
+            if(p != null)
+            {
+                p.playerWeapon.dropWeapon = this;
+            }
             ShowInfoPanel();
         }
     }
@@ -50,6 +55,11 @@ public class DroppedWeapon : MonoBehaviour
         if (IsActive == false) return;
         if(collision.gameObject.CompareTag("Player"))
         {
+            Player p = collision.gameObject.GetComponent<Player>();
+            if (p != null)
+            {
+                p.playerWeapon.dropWeapon = null;
+            }
             HideInfoPanel();
         }
     }

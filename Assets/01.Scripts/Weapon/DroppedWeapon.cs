@@ -8,6 +8,7 @@ public class DroppedWeapon : MonoBehaviour
     private Weapon _weapon = null;
     public Weapon weapon { get => _weapon; }
 
+    [SerializeField]
     private bool _isActive = false;
     public bool IsActive
     {
@@ -15,25 +16,32 @@ public class DroppedWeapon : MonoBehaviour
         set
         {
             _isActive = value;
-            _boxCol.enabled = _isActive;
+            BoxCol.enabled = _isActive;
+        }
+    }
+    public BoxCollider2D BoxCol
+    {
+        get
+        {
+            if(_boxCol == null) _boxCol = GetComponent<BoxCollider2D>();
+            return _boxCol;
         }
     }
 
     private void Awake()
     {
-        _boxCol = GetComponent<BoxCollider2D>();
         _weapon = GetComponent<Weapon>();
         IsActive = false;
     }
 
     public void ShowInfoPanel()
     {
-        //무기 정보 패널 보이기
+        UIManager.Instance.OpenMessageTooltip("무기 교체를 원하시면 X 키를 누르세요");
     }
 
     public void HideInfoPanel()
     {
-
+        UIManager.Instance.CloseMessageTooltip();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

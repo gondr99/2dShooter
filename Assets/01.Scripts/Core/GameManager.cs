@@ -51,6 +51,8 @@ public class GameManager : MonoBehaviour
 
         Instantiate(_textureParticleManagerPrefab, transform.parent);
 
+        UIManager.Instance = new UIManager(); 
+
         SetCursorIcon();
         CreatePool();
     }

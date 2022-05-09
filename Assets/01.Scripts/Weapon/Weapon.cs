@@ -44,6 +44,7 @@ public class Weapon : MonoBehaviour, IRangeWeapon
     #region 발사로직
     public UnityEvent OnShoot;
     public UnityEvent OnShootNoAmmo;
+    public UnityEvent OnStopShooting;
 
     protected bool _isShooting = false;
     [SerializeField] protected bool _delayCoroutine = false;
@@ -149,6 +150,7 @@ public class Weapon : MonoBehaviour, IRangeWeapon
     public void StopShooting()
     {
         _isShooting = false;
+        OnStopShooting?.Invoke();
     }
 
     public Vector3 GetRightDirection()

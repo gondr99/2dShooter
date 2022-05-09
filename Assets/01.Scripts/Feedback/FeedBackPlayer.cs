@@ -17,7 +17,7 @@ public class FeedBackPlayer : MonoBehaviour
         }
     }
 
-    private void FinishFeedback()
+    public void FinishFeedback()
     {
         foreach (FeedBack f in _feedbackToPlay)
         {

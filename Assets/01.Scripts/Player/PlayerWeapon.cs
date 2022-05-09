@@ -122,6 +122,7 @@ public class PlayerWeapon : AgentWeapon
     //이 함수는 x키를 눌렀을 때 실행됩니다. 
     public void AddWeapon()
     {
+        if (_isReloading) return;
         /*3가지 경우
         1 . 땅에 떨어진 무기가 있고, 그 위에 플레이어가 있고, 내가지금 무기를 안들고 있어.
         => 이러면 줍는다.
@@ -157,6 +158,7 @@ public class PlayerWeapon : AgentWeapon
     {
         _weapon = null;
         _currentWeapon = null;
+        weapon.StopShooting();
         weapon.transform.parent = null; //월드에다가 던져버린다.
 
         //총을 던질때는 총구방향으로 던지도록 코드를 작성할께

@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d73d049f9b1f54e4483be75ab40fbeac, type: 3}
   m_Name: ShotgunData
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  bulletData: {fileID: 0}
-  ammoCapacity: 100
+  prefab: {fileID: 507931571048679214, guid: 53d8d6948a9e1ee408032e6a35d75c36, type: 3}
+  bulletData: {fileID: 11400000, guid: ce5ab55e6c99546428588cf34e17fde6, type: 2}
+  ammoCapacity: 50
   automaticFire: 0
-  weaponDelay: 0.1
-  spreadAngle: 5
-  _multiBulletShoot: 0
-  _bulletCount: 1
-  damageFactor: 1
-  reloadTime: 0.1
-  shootClip: {fileID: 0}
-  outOfAmmoClip: {fileID: 0}
-  reloadClip: {fileID: 0}
-  sprite: {fileID: 0}
+  weaponDelay: 0.8
+  spreadAngle: 10
+  _multiBulletShoot: 1
+  _bulletCount: 5
+  damageFactor: 2
+  reloadTime: 1.8
+  shootClip: {fileID: 8300000, guid: ac369280bc4e1f747abe8593eac273c6, type: 3}
+  outOfAmmoClip: {fileID: 8300000, guid: 56c260531cb172d40b5f6ed2f0f3a601, type: 3}
+  reloadClip: {fileID: 8300000, guid: 1adb6ab7f57563a4a952d8d20f2e415c, type: 3}
+  sprite: {fileID: 21300000, guid: db73e4d92cd2baf469860b731ef85318, type: 3}
   infiniteAmmo: 0

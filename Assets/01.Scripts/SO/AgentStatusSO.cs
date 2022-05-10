@@ -9,4 +9,6 @@ public class AgentStatusSO : ScriptableObject
 
     [Range(0, 0.7f)] public float dodge; //캐릭터 회피확률
     [Range(3, 8)] public int maxHP; //최대 체력
+
+    [Range(1, 5)] public int maxWeapon = 3;
 }

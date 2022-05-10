@@ -10,6 +10,14 @@ public class PlayerWeapon : AgentWeapon
     //나중에 플레이어만을 위한 무기교체, 무기드랍, 무기얻기 코드가 여기 들어옵니다.
     #region 무기드랍 및 교체 로직
     public DroppedWeapon dropWeapon = null;
+
+    private List<Weapon> _weaponList = new List<Weapon>();
+    private Player _player;
+    private int _currentWeaponIndex = 0;
+
+    public UnityEvent<List<Weapon>> UpdateWeaponUI;
+    public UnityEvent<bool, Action> ChangeWeaponUI;
+    private bool _isChangeWeapon = false;
     #endregion
 
     [field : SerializeField]
@@ -42,23 +50,41 @@ public class PlayerWeapon : AgentWeapon
 
     public override void AssignWeapon()
     {
-        if (_currentWeapon == null) return;
         _weapon = _currentWeapon;
-        _weaponRenderer = _weapon.Renderer;
+        _weaponRenderer = _weapon?.Renderer;
     }
 
     protected override void AwakeChild()
     {
         _audioSource = GetComponent<AudioSource>();
+        _player = transform.parent.GetComponent<Player>();
     }
 
     protected void Start()
     {
-        //이건 차후에 수정할 꺼야.
-        _currentWeapon = transform.Find("Shotgun").GetComponent<Weapon>();
-        AssignWeapon();
+        Weapon[] weapons = GetComponentsInChildren<Weapon>(); //자식으로 가진 모든 웨폰을 가져온다.
 
-        OnChangeTotalAmmo?.Invoke(_totalAmmo, _maxTotalAmmo);
+        for(int idx = 0; idx < _player.PlayerStatus.maxWeapon; idx++)
+        {
+            if(weapons.Length <= idx)
+            {
+                _weaponList.Add(null);
+            }else
+            {
+                _weaponList.Add(weapons[idx]);
+                weapons[idx].gameObject.SetActive(false);
+            }
+        }
+
+        if(_weaponList.Count > 0)
+        {
+            _currentWeapon = _weaponList[0];
+            _currentWeapon.gameObject.SetActive(true);
+            AssignWeapon();
+            OnChangeTotalAmmo?.Invoke(_totalAmmo, _maxTotalAmmo);
+        }
+
+        UpdateWeaponUI?.Invoke(_weaponList);
     }
 
     public void ReloadGun()
@@ -171,5 +197,39 @@ public class PlayerWeapon : AgentWeapon
         {
             weapon.droppedWeapon.IsActive = true;
         });
+    }
+
+    public void ChangeToNextWeapon(bool isPrev)
+    {
+        if(_isReloading || _weaponList.Count <= 1)
+        {
+            PlayClip(_cannotSound);
+            return;
+        }
+
+        _currentWeapon?.gameObject.SetActive(false); //현재 들고 있는 무기 비활성화 해주고
+
+        int nextIdx = 0;
+        if (isPrev)
+        {
+            nextIdx = _currentWeaponIndex - 1 < 0 ? _weaponList.Count - 1 : _currentWeaponIndex - 1;
+        }else
+        {
+            nextIdx = (_currentWeaponIndex + 1) % _weaponList.Count;
+        }
+
+        ChangeWeapon(_weaponList[nextIdx]);
+        _currentWeaponIndex = nextIdx;
+    }
+
+    private void ChangeWeapon(Weapon weapon)
+    {
+        _currentWeapon = weapon;
+        if(weapon != null)
+        {
+            weapon.gameObject.SetActive(true);
+            weapon.ResetWeapon();
+        }
+        AssignWeapon();
     }
 }

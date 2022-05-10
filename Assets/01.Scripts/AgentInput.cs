@@ -19,6 +19,8 @@ public class AgentInput : MonoBehaviour, IAgentInput
 
     [field: SerializeField] public UnityEvent OnDropButtonPress { get; set; }
 
+    public UnityEvent<bool> OnNextWeaponPress;
+
     private void Update()
     {
         GetMovementInput();
@@ -27,6 +29,18 @@ public class AgentInput : MonoBehaviour, IAgentInput
         GetReloadInput();
 
         GetDropInput();
+        GetChangeWeapon();
+    }
+
+    private void GetChangeWeapon()
+    {
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            OnNextWeaponPress?.Invoke(false); //다음무기
+        }else if(Input.GetKeyDown(KeyCode.Q))
+        {
+            OnNextWeaponPress?.Invoke(true); //이전 무기
+        }
     }
 
     private void GetDropInput()

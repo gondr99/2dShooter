@@ -178,4 +178,10 @@ public class Weapon : MonoBehaviour, IRangeWeapon
             return (transform.right * 0.5f + transform.up).normalized * -1;
         }
     }
+
+    public void ResetWeapon()
+    {
+        _isShooting = false;
+        _delayCoroutine = false;
+    }
 }

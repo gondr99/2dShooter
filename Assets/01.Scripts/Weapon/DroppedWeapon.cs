@@ -7,6 +7,7 @@ public class DroppedWeapon : MonoBehaviour
     private BoxCollider2D _boxCol;
     private Weapon _weapon = null;
     public Weapon weapon { get => _weapon; }
+    private WeaponTooltip _weaponTooltip = null;
 
     [SerializeField]
     private bool _isActive = false;
@@ -37,11 +38,14 @@ public class DroppedWeapon : MonoBehaviour
     public void ShowInfoPanel()
     {
         UIManager.Instance.OpenMessageTooltip("무기 교체를 원하시면 X 키를 누르세요");
+        _weaponTooltip = UIManager.Instance.OpenWeaponTooltip(
+                            _weapon.WeaponData, transform.position);
     }
 
     public void HideInfoPanel()
     {
         UIManager.Instance.CloseMessageTooltip();
+        UIManager.Instance.CloseWeaponTooltip(_weaponTooltip);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -55,7 +55,7 @@ public class PlayerWeapon : AgentWeapon
     protected void Start()
     {
         //이건 차후에 수정할 꺼야.
-        _currentWeapon = transform.Find("assault_rifle").GetComponent<Weapon>();
+        _currentWeapon = transform.Find("Shotgun").GetComponent<Weapon>();
         AssignWeapon();
 
         OnChangeTotalAmmo?.Invoke(_totalAmmo, _maxTotalAmmo);

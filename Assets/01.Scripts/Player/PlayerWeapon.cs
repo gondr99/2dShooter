@@ -48,6 +48,7 @@ public class PlayerWeapon : AgentWeapon
     private bool _isReloading = false;
     public bool IsReloading { get => _isReloading; }
 
+
     public override void AssignWeapon()
     {
         _weapon = _currentWeapon;
@@ -178,6 +179,8 @@ public class PlayerWeapon : AgentWeapon
             dropWeapon.PickUpWeapon();
             dropWeapon = null;
         }
+
+        UpdateWeaponUI?.Invoke(_weaponList);
     }
 
     private void DropWeapon(Weapon weapon)
@@ -201,25 +204,33 @@ public class PlayerWeapon : AgentWeapon
 
     public void ChangeToNextWeapon(bool isPrev)
     {
-        if(_isReloading || _weaponList.Count <= 1)
+        if(_isReloading || _weaponList.Count <= 1 || _isChangeWeapon == true)
         {
             PlayClip(_cannotSound);
             return;
         }
 
+        _isChangeWeapon = true;
         _currentWeapon?.gameObject.SetActive(false); //현재 들고 있는 무기 비활성화 해주고
 
-        int nextIdx = 0;
-        if (isPrev)
+        ChangeWeaponUI?.Invoke(isPrev, () =>
         {
-            nextIdx = _currentWeaponIndex - 1 < 0 ? _weaponList.Count - 1 : _currentWeaponIndex - 1;
-        }else
-        {
-            nextIdx = (_currentWeaponIndex + 1) % _weaponList.Count;
-        }
+            int nextIdx = 0;
+            if (isPrev)
+            {
+                nextIdx = _currentWeaponIndex - 1 < 0 ? _weaponList.Count - 1 : _currentWeaponIndex - 1;
+            }
+            else
+            {
+                nextIdx = (_currentWeaponIndex + 1) % _weaponList.Count;
+            }
 
-        ChangeWeapon(_weaponList[nextIdx]);
-        _currentWeaponIndex = nextIdx;
+            ChangeWeapon(_weaponList[nextIdx]);
+            _currentWeaponIndex = nextIdx;
+
+            _isChangeWeapon = false;
+        });
+        
     }
 
     private void ChangeWeapon(Weapon weapon)

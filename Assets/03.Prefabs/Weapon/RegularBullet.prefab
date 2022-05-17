@@ -156,6 +156,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletData: {fileID: 0}
   damageFactor: 1
-  aaa:
-    serializedVersion: 2
-    m_Bits: 448

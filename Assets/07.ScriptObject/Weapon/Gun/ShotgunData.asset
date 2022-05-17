@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShotgunData
   m_EditorClassIdentifier: 
   prefab: {fileID: 507931571048679214, guid: 53d8d6948a9e1ee408032e6a35d75c36, type: 3}
-  bulletData: {fileID: 11400000, guid: ce5ab55e6c99546428588cf34e17fde6, type: 2}
+  bulletData: {fileID: 11400000, guid: 2803c6957dd8e3a47840090066d32fd4, type: 2}
   ammoCapacity: 50
   automaticFire: 0
   weaponDelay: 0.8

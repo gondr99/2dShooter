@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GunPanel : MonoBehaviour
 {
     [SerializeField] private Weapon _weapon;
+    public Weapon Weapon { get => _weapon; }
 
     private Image _weaponImage;
     private TextMeshProUGUI _ammoText;

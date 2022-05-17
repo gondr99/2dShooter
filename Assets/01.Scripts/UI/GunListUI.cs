@@ -25,23 +25,50 @@ public class GunListUI : MonoBehaviour
         _panelList = new List<GunPanel>();
     }
 
-    public void InitUIPanel(List<Weapon> weaponList)
+    public void InitUIPanel(List<Weapon> weaponList, int nowIndex)
     {
-        for(int i = weaponList.Count -1; i >= 0; i--)
-        {
-            GunPanel panel = Instantiate(_gunPanelPrefab, transform);
-            RectTransform rectTrm = panel.GetComponent<RectTransform>();
-            rectTrm.anchoredPosition = _initAnchorPos + new Vector2(i * _xDelta, 0);
+        List<Weapon> cloneList = weaponList.ToList(); 
+        //리스트를 복제하는거. 다만 안에 있는 원소는 참조로 복제된다.
 
-            if(i != 0)
+        for(int i = 0; i < nowIndex; i++)
+        {
+            Weapon first = cloneList.First();
+            cloneList.Remove(first);
+            cloneList.Add(first);
+        }
+
+        cloneList.Reverse();
+        _panelList.Clear();
+
+        for(int i = 0; i < cloneList.Count; i++)
+        {
+            GunPanel panel = null;
+            if(i < transform.childCount)  //재활용
+            {
+                panel = transform.GetChild(i).GetComponent<GunPanel>();
+            }else  //새로 생성
+            {
+                panel = Instantiate(_gunPanelPrefab, transform);
+            }
+
+            RectTransform rectTrm = panel.GetComponent<RectTransform>();
+            rectTrm.anchoredPosition = _initAnchorPos + new Vector2( (cloneList.Count - i - 1) * _xDelta, 0);
+
+            if(i != cloneList.Count - 1)
             {
                 rectTrm.localScale = Vector3.one * 0.9f;
             }
 
-            panel.Init(weaponList[i]);
+            panel.Init(cloneList[i]);
+            if(cloneList[i] != null)
+                panel.UpdateBullet(cloneList[i].Ammo);
+            else
+                panel.UpdateBullet(0);
             _panelList.Add(panel);
         }
         _panelList.Reverse();
+
+        ConnectAmmoTextEvent(); //텍스트 연결
     }
 
     private void PlaySound(AudioClip clip)
@@ -51,12 +78,23 @@ public class GunListUI : MonoBehaviour
         _audioSource.Play();
     }
 
+    private void ConnectAmmoTextEvent()
+    {
+        GunPanel first = _panelList.First(); //지금 활성화되어있는 녀석
+        first.Weapon?.OnAmmoChange.AddListener((amount) =>
+        {
+            first.UpdateBullet(amount);
+        });
+    }
+
     #region 무기 변경 UI 닷트윈
     public void ChangeWeaponUI(bool isPrev, Action CallBack = null)
     {
         GunPanel first = _panelList.First();
         GunPanel last = _panelList.Last();
         GunPanel next = _panelList[1];
+
+        first.Weapon?.OnAmmoChange.RemoveAllListeners(); //첫번째 무기의 리스너 제거
 
         Sequence seq = DOTween.Sequence();
         if(isPrev)
@@ -112,6 +150,7 @@ public class GunListUI : MonoBehaviour
         seq.AppendCallback(() =>
         {
             PlaySound(_changeClip);
+            ConnectAmmoTextEvent(); //변경된 무기로 이벤트 연결
             CallBack?.Invoke();
         });
     }

@@ -82,7 +82,7 @@ public class Weapon : MonoBehaviour, IRangeWeapon
             {
                 if(!_weaponData.infiniteAmmo)
                 {
-                    Ammo--; //¹«ÇÑ Åº¾à ÃÑÀÌ ¾Æ´Ï¸é Åº¾à °¨¼Ò
+                    Ammo -= _weaponData.GetBulletCountToSpawn(); //¹«ÇÑ Åº¾à ÃÑÀÌ ¾Æ´Ï¸é Åº¾à °¨¼Ò
                 }
 
                 OnShoot?.Invoke(); //½ÇÁ¦ ½´ÆÃ

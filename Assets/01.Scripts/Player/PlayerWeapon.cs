@@ -15,7 +15,7 @@ public class PlayerWeapon : AgentWeapon
     private Player _player;
     private int _currentWeaponIndex = 0;
 
-    public UnityEvent<List<Weapon>> UpdateWeaponUI;
+    public UnityEvent<List<Weapon>, int> UpdateWeaponUI;
     public UnityEvent<bool, Action> ChangeWeaponUI;
     private bool _isChangeWeapon = false;
     #endregion
@@ -85,7 +85,7 @@ public class PlayerWeapon : AgentWeapon
             OnChangeTotalAmmo?.Invoke(_totalAmmo, _maxTotalAmmo);
         }
 
-        UpdateWeaponUI?.Invoke(_weaponList);
+        UpdateWeaponUI?.Invoke(_weaponList, _currentWeaponIndex);
     }
 
     public void ReloadGun()
@@ -163,6 +163,7 @@ public class PlayerWeapon : AgentWeapon
         if(_currentWeapon != null)
         {
             DropWeapon(_currentWeapon);
+            
         }
 
         //1,2번 케이스
@@ -176,15 +177,18 @@ public class PlayerWeapon : AgentWeapon
 
             _currentWeapon = _weapon = dropWeapon.weapon;
 
+            _weaponList[_currentWeaponIndex] = _currentWeapon; //주운 무기를 리스트에 넣는다.
+
             dropWeapon.PickUpWeapon();
             dropWeapon = null;
         }
 
-        UpdateWeaponUI?.Invoke(_weaponList);
+        UpdateWeaponUI?.Invoke(_weaponList, _currentWeaponIndex);
     }
 
     private void DropWeapon(Weapon weapon)
     {
+        _weaponList[_currentWeaponIndex] = null; //버려야해
         _weapon = null;
         _currentWeapon = null;
         weapon.StopShooting();

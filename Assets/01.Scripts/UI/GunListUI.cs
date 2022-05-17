@@ -61,6 +61,25 @@ public class GunListUI : MonoBehaviour
         Sequence seq = DOTween.Sequence();
         if(isPrev)
         {
+            seq.Append(first.RectTrm.DOScale(Vector3.one * 0.9f, _transitionTime));
+            seq.Join(first.RectTrm.DOAnchorPos(_initAnchorPos + new Vector2(_xDelta, 0), _transitionTime));
+            for(int i = 1; i < _panelList.Count - 1; i++)
+            {
+                seq.Join(_panelList[i].RectTrm.DOAnchorPos(
+                    _initAnchorPos + new Vector2(_xDelta * (i + 1), 0), 
+                    _transitionTime));
+            }
+            seq.Join(last.RectTrm.DOScale(Vector3.one, _transitionTime));
+            seq.Join(last.RectTrm.DOAnchorPos(_initAnchorPos + new Vector2(0, 82), _transitionTime));
+
+            seq.AppendCallback(() =>
+            {
+                last.RectTrm.SetAsLastSibling();
+                _panelList.RemoveAt(_panelList.Count - 1);
+                _panelList.Insert(0, last); //맨 앞으로
+            });
+
+            seq.Append(last.RectTrm.DOAnchorPos(_initAnchorPos, _transitionTime));
 
         }else
         {
@@ -88,12 +107,13 @@ public class GunListUI : MonoBehaviour
                 _initAnchorPos + new Vector2(_xDelta * (_panelList.Count - 1), 0), 
                 _transitionTime));
 
-            seq.AppendCallback(() =>
-            {
-                PlaySound(_changeClip);
-                CallBack?.Invoke();
-            });
         }
+
+        seq.AppendCallback(() =>
+        {
+            PlaySound(_changeClip);
+            CallBack?.Invoke();
+        });
     }
     #endregion
 }

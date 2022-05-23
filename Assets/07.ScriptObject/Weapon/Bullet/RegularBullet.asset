@@ -17,7 +17,7 @@ MonoBehaviour:
   bulletSpeed: 20
   explosionRadius: 0
   sprite: {fileID: -6051064961186182539, guid: 4f4e95b34d9c7f842a2a810504f24617, type: 3}
-  animatorController: {fileID: 0}
+  animatorController: {fileID: 9100000, guid: f97fc55f4eeea47429194a8e5a67ebac, type: 2}
   friction: 0
   bounce: 0
   goThroughHit: 0

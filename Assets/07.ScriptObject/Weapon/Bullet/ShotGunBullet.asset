@@ -17,7 +17,7 @@ MonoBehaviour:
   bulletSpeed: 20
   explosionRadius: 0
   sprite: {fileID: 7437052294856041922, guid: 4f4e95b34d9c7f842a2a810504f24617, type: 3}
-  animatorController: {fileID: 0}
+  animatorController: {fileID: 22100000, guid: 9badc1ac39ec47c44a4ac73ebd551b2b, type: 2}
   friction: 0
   bounce: 0
   goThroughHit: 0
@@ -28,4 +28,4 @@ MonoBehaviour:
   knockBackPower: 8
   knockBackDelay: 0.5
   bulletMat: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  lifeTime: 0.6
+  lifeTime: 0.3

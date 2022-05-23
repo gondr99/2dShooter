@@ -17,7 +17,9 @@ public class DissolveFeedback : FeedBack
 
     public override void CompletePrevFeedBack()
     {
+        _spriteRenderer.DOComplete();
         _spriteRenderer.material.DOComplete();
+        _spriteRenderer.material.SetFloat("_Dissolve", 1);
     }
 
     public override void CreateFeedBack()

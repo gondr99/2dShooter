@@ -22,6 +22,7 @@ public class FlashFeedback : FeedBack
     public override void CompletePrevFeedBack()
     {
         StopAllCoroutines();
+        _spriteRenderer.material.SetInt("_MakeSolidColor", 0);
         _spriteRenderer.material.shader = _originalMatShader;
     }
 

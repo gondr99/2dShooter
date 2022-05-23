@@ -68,24 +68,24 @@ public class MessageTooltip : MonoBehaviour
         transform.localScale = Vector3.zero;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            ShowText("테스트 툴팁", 1f);
-        }
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.T))
+    //    {
+    //        ShowText("테스트 툴팁", 1f);
+    //    }
 
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            ShowText("이건 무한히 열립니다.");
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            CloseText();
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            CloseImmediatly();
-        }
-    }
+    //    if (Input.GetKeyDown(KeyCode.Y))
+    //    {
+    //        ShowText("이건 무한히 열립니다.");
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.U))
+    //    {
+    //        CloseText();
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.I))
+    //    {
+    //        CloseImmediatly();
+    //    }
+    //}
 }

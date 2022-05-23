@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -61,6 +62,9 @@ public class Enemy : PoolableMono, IAgent, IHittable
     }
     #endregion
 
+    [SerializeField]
+    private bool _isActive = false;
+
     private void Awake()
     {
         _agentMovement = GetComponent<AgentMovement>();
@@ -71,7 +75,7 @@ public class Enemy : PoolableMono, IAgent, IHittable
 
     public void PerformAttack()
     {
-        if (!_isDead)
+        if (_isDead == false && _isActive == true)
         {
             //여기에 실제적인 공격을 수행할 거다.
             _enemyAttack.Attack(_enemytData.damage);
@@ -81,6 +85,7 @@ public class Enemy : PoolableMono, IAgent, IHittable
     public override void Reset()
     {
         Health = _enemytData.maxHealth;
+        _isActive = false;
         _isDead = false;
         _agentMovement.enabled = true;
         _enemyAttack.Reset(); //처음 생성시에 쿨타임 다시 돌아가게 
@@ -100,4 +105,9 @@ public class Enemy : PoolableMono, IAgent, IHittable
         PoolManager.Instance.Push(this);
     }
 
+    public void SpawnInPortal(Vector3 pos, float power, float time)
+    {
+        _isActive = false;
+        transform.DOJump(pos, power, 1, time).OnComplete(() => _isActive = true);
+    }
 }

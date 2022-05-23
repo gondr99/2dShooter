@@ -91,16 +91,16 @@ public class HealthBar : MonoBehaviour
         _sepMeshFilter.mesh = _sepMesh;
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            SetHealth(40);
-        }
+    //private void Update()
+    //{
+    //    if(Input.GetKeyDown(KeyCode.H))
+    //    {
+    //        SetHealth(40);
+    //    }
 
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            SetHealth(5);
-        }
-    }
+    //    if (Input.GetKeyDown(KeyCode.J))
+    //    {
+    //        SetHealth(5);
+    //    }
+    //}
 }

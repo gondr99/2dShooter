@@ -12,10 +12,10 @@ public class RegularBullet : Bullet
     protected Animator _animator;
     protected float _timeToLive;
 
-    private int _enemyLayer;
-    private int _obstacleLayer;
+    protected int _enemyLayer;
+    protected int _obstacleLayer;
 
-    private bool _isDead = false; //한개의 총알이 여러명의 적에 영향주는 것을 막기 위함.
+    protected bool _isDead = false; //한개의 총알이 여러명의 적에 영향주는 것을 막기 위함.
 
     public override BulletDataSO BulletData { 
         get => _bulletData;
@@ -54,7 +54,7 @@ public class RegularBullet : Bullet
         _obstacleLayer = LayerMask.NameToLayer("Obstacle");
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         _timeToLive += Time.fixedDeltaTime;
 
@@ -93,14 +93,24 @@ public class RegularBullet : Bullet
 
     private void HitEnemy(Collider2D collider)
     {
+        IKnockback kb = collider.GetComponent<IKnockback>();
+        kb?.Knockback(transform.right, _bulletData.knockBackPower, _bulletData.knockBackDelay);
+        
+        //피격시 총알이펙트 만들어야 해
+
         IHittable hittable = collider.GetComponent<IHittable>();
         if(hittable != null && hittable.IsEnemy == IsEnemy)
         {
             return; //총알과 피격체의 피아식별이 같을 경우 아군피격
         }
         hittable?.GetHit(damage: _bulletData.damage * damageFactor, damageDealer: gameObject);
-    }
 
+        Vector2 randomOffset = Random.insideUnitCircle * 0.5f;
+
+        ImpactScript impact = PoolManager.Instance.Pop(_bulletData.impactEnemyPrefab.name) as ImpactScript;
+        Quaternion rot = Quaternion.Euler(new Vector3(0, 0, Random.Range(0, 360f)));
+        impact.SetPositionAndRotation(collider.transform.position + (Vector3)randomOffset, rot);
+    }
     
     private void HitObstacle(Collider2D collider)
     {

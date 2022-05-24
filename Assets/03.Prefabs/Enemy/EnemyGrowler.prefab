@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pitchRandomness: 0.2
-  _hitClip: {fileID: 8300000, guid: 7d765f2a7ff77d34b9041393079ed52b, type: 3}
+  _hitClip: {fileID: 8300000, guid: 7cf24ad6137a5284593b116f1ccfe56b, type: 3}
   _deathClip: {fileID: 8300000, guid: 7c863d4f465df9346a88293b4a749018, type: 3}
   _voiceLineClip: {fileID: 8300000, guid: 09c3579839a874140b8646ed9dfd6ce7, type: 3}
   _attackSound: {fileID: 8300000, guid: 517446f066e878347bb1917342b4c9a7, type: 3}
@@ -868,7 +868,20 @@ MonoBehaviour:
   _movementSO: {fileID: 11400000, guid: 4ad61e14c1eb959478bd70b18f0f1835, type: 2}
   OnVelocityChange:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8888691204575810279}
+        m_TargetAssemblyTypeName: AgentAnimation, Assembly-CSharp
+        m_MethodName: AnimatePlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _isKnockback: 0
 --- !u!70 &8888691204569930817
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -947,6 +960,7 @@ MonoBehaviour:
       m_Calls: []
   _currentState: {fileID: 8888691203912730214}
   target: {fileID: 0}
+  basePosition: {fileID: 0}
 --- !u!114 &520331800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1015,6 +1029,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 8888691204569930817}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   <OnGetHit>k__BackingField:
     m_PersistentCalls:
       m_Calls:
@@ -1042,6 +1068,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _isActive: 0
 --- !u!1 &8888691204575810303
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,7 +1315,7 @@ MonoBehaviour:
   - {x: -0.14946365, y: -0.008002758, z: 0}
   m_ShapePathHash: -1050891923
   m_Mesh: {fileID: 0}
-  m_InstanceId: 46566
+  m_InstanceId: 35368
 --- !u!114 &8888691204575810301
 MonoBehaviour:
   m_ObjectHideFlags: 0

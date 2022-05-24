@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Enemy : PoolableMono, IAgent, IHittable
+public class Enemy : PoolableMono, IAgent, IHittable, IKnockback
 {
     [SerializeField] private EnemyDataSO _enemytData;
     public EnemyDataSO EnemyData => _enemytData;
@@ -13,6 +13,8 @@ public class Enemy : PoolableMono, IAgent, IHittable
     private AgentMovement _agentMovement; //차후 넉백처리하려고 미리 가져온다.
     private EnemyAnimation _enemyAnimation;
     private EnemyAttack _enemyAttack;
+    private CapsuleCollider2D _collider;
+
 
     //죽었을때 처리할 것과
     //액티브 상태를 관리할 애가
@@ -70,6 +72,7 @@ public class Enemy : PoolableMono, IAgent, IHittable
         _agentMovement = GetComponent<AgentMovement>();
         _enemyAnimation = transform.Find("VisualSprite").GetComponent<EnemyAnimation>();
         _enemyAttack = GetComponent<EnemyAttack>();
+        _collider = GetComponent<CapsuleCollider2D>();
         _enemyAttack.attackDelay = _enemytData.attackDelay;
     }
 
@@ -85,12 +88,14 @@ public class Enemy : PoolableMono, IAgent, IHittable
     public override void Reset()
     {
         Health = _enemytData.maxHealth;
+        _collider.enabled = true;
         _isActive = false;
         _isDead = false;
         _agentMovement.enabled = true;
         _enemyAttack.Reset(); //처음 생성시에 쿨타임 다시 돌아가게 
         //액티브 상태 초기화
         //Reset에 대한 이벤트 발행
+        _agentMovement.ResetKnockbackParam(); 
     }
 
     private void Start()
@@ -109,5 +114,16 @@ public class Enemy : PoolableMono, IAgent, IHittable
     {
         _isActive = false;
         transform.DOJump(pos, power, 1, time).OnComplete(() => _isActive = true);
+    }
+
+    public void Knockback(Vector2 direction, float power, float duration)
+    {
+        if(_isDead == false && _isActive == true)
+        {
+            if(power > _enemytData.knockbackRegist)
+            {
+                _agentMovement.Knockback(direction, power, duration);
+            }
+        }
     }
 }

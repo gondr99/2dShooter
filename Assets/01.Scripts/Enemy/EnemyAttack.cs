@@ -14,9 +14,6 @@ public abstract class EnemyAttack : MonoBehaviour
 
     public bool WaitingForNextAttack => _waitBeforeNextAttack;
 
-    protected bool _isAttacking = false; //현재 공격중인가?
-    public bool IsAttacking => _isAttacking;
-
     public UnityEvent AttackFeedback;
 
     private void Awake()

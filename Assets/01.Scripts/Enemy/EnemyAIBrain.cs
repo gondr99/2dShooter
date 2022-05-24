@@ -13,6 +13,7 @@ public class EnemyAIBrain : MonoBehaviour, IAgentInput
     [SerializeField] private AIState _currentState;
 
     public Transform target;
+    public Transform basePosition = null;
 
     private void Start()
     {

@@ -16,6 +16,12 @@ public class AgentMovement : MonoBehaviour
 
     public UnityEvent<float> OnVelocityChange; //플레이어 속도가 바뀔때 실행될 이벤트
 
+    #region 넉백관련 파라메터
+    [SerializeField]
+    protected bool _isKnockback = false;
+    protected Coroutine _knockbackCo = null;
+    #endregion
+
     private void Awake()
     {
         _rigid = GetComponent<Rigidbody2D>();
@@ -50,7 +56,9 @@ public class AgentMovement : MonoBehaviour
     private void FixedUpdate()
     {
         OnVelocityChange?.Invoke(_currentVelocity);
-        _rigid.velocity = _movementDirection * _currentVelocity;
+
+        if(_isKnockback == false)
+            _rigid.velocity = _movementDirection * _currentVelocity;
     }
 
 
@@ -60,4 +68,30 @@ public class AgentMovement : MonoBehaviour
         _currentVelocity = 0;
         _rigid.velocity = Vector2.zero;
     }
+
+    #region 넉백관련 구현부
+    public void Knockback(Vector2 direction, float power, float duration)
+    {
+        if(_isKnockback == false)
+        {
+            _isKnockback = true;
+            _knockbackCo = StartCoroutine(KnockbackCoroutine(direction, power, duration));
+        }
+    }
+
+    IEnumerator KnockbackCoroutine(Vector2 direction, float power, float duration)
+    {
+        _rigid.AddForce(direction.normalized * power, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(duration);
+        ResetKnockbackParam();
+    }
+
+    public void ResetKnockbackParam()
+    {
+        _currentVelocity = 0;
+        _rigid.velocity = Vector2.zero;
+        _isKnockback = false;
+        _rigid.gravityScale = 0;
+    }
+    #endregion
 }

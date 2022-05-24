@@ -24,8 +24,8 @@ MonoBehaviour:
   isRayCast: 0
   isCharging: 0
   impactObstaclePrefab: {fileID: 4351521078836525234, guid: 190b7887ea10eac45affdd1b8a3b727f, type: 3}
-  impactEnemyPrefab: {fileID: 0}
-  knockBackPower: 6
+  impactEnemyPrefab: {fileID: 2515579103656511936, guid: c1765b11c19ae4f4c8e2269ac4287d1a, type: 3}
+  knockBackPower: 3
   knockBackDelay: 0.1
   bulletMat: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   lifeTime: 2

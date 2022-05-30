@@ -9,7 +9,7 @@ public class AttackAction : AIAction
         _aiMovementData.direction = Vector2.zero; //멈춰서
         _aiMovementData.pointOfInterest = _enemyBrain.target.position;
         _enemyBrain.Move(_aiMovementData.direction, _aiMovementData.pointOfInterest);
-        _aiActionData.attack = true;
+        //_aiActionData.attack = true;
 
         _enemyBrain.Attack(); //공격키가 눌리게 만드는거
     }

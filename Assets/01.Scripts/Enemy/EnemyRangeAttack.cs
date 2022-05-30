@@ -14,6 +14,9 @@ public class EnemyRangeAttack : EnemyAttack
         
         if(_waitBeforeNextAttack == false)
         {
+            _enemyBrain.SetAttackState(true); //공격시작으로 셋팅
+            AttackFeedback?.Invoke(); 
+
             Transform target = GetTarget();
             
             Vector2 aimDirection = target.position - _firePos.position;

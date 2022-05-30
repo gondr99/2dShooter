@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Player : MonoBehaviour, IAgent, IHittable
+public class Player : MonoBehaviour, IAgent, IHittable, IKnockback
 {
     [SerializeField] private AgentStatusSO _agentStatusSO;
     public AgentStatusSO PlayerStatus { get => _agentStatusSO; }
@@ -13,6 +13,8 @@ public class Player : MonoBehaviour, IAgent, IHittable
         get => _health; 
         set { _health = Mathf.Clamp(value, 0, _agentStatusSO.maxHP); } 
     }
+
+    private AgentMovement _agentMovement;
 
     //사망처리를 위한 불리언 변수 하나 추가
     private bool _isDead = false;
@@ -48,10 +50,16 @@ public class Player : MonoBehaviour, IAgent, IHittable
     private void Awake()
     {
         _playerWeapon = transform.Find("WeaponParent").GetComponent<PlayerWeapon>();
+        _agentMovement = GetComponent<AgentMovement>();
     }
 
     private void Start()
     {
         Health = _agentStatusSO.maxHP;
+    }
+
+    public void Knockback(Vector2 direction, float power, float duration)
+    {
+        _agentMovement.Knockback(direction, power, duration);
     }
 }

@@ -15,6 +15,18 @@ public class EnemyAIBrain : MonoBehaviour, IAgentInput
     public Transform target;
     public Transform basePosition = null;
 
+    private AIActionData _aiActionData;
+
+    private void Awake()
+    {
+        _aiActionData = transform.Find("AI").GetComponent<AIActionData>();
+    }
+
+    public void SetAttackState(bool state)
+    {
+        _aiActionData.attack = state;
+    }
+
     private void Start()
     {
         target = GameManager.Instance.PlayerTrm;

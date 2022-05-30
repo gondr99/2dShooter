@@ -8,6 +8,8 @@ public class EnemyMeleeAttack : EnemyAttack
     {
         if(_waitBeforeNextAttack == false)
         {
+            _enemyBrain.SetAttackState(true); //공격시작으로 셋팅
+
             IHittable hittable = GetTarget().GetComponent<IHittable>();
 
             hittable?.GetHit(damage: damage, damageDealer: gameObject);

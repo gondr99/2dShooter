@@ -16,8 +16,7 @@ public class EnemyAnimation : AgentAnimation
 
     public void SetEndOfAttackAnimation()
     {
-        //_enemyAIBrain.SetAttackState(false);
-        // 강의자료 25페이지에서 멈춤
+        _enemyAIBrain.SetAttackState(false);
     }
 
     public void PlayAttackAnimation()

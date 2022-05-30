@@ -36,6 +36,7 @@ public class AIState : MonoBehaviour
                 if (!result) break;
             }
 
+
             if(result) //모든 조건이 성공한거야
             {
                 if(transition.positiveState != null)

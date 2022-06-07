@@ -39,4 +39,14 @@ public class Define
         Ammo,
         Coin
     }
+
+    public enum RoomType
+    {
+        Monster = 0,
+        Trap = 1,
+        Store = 2,
+        Boss = 3,
+        Heal = 4,
+        Start = 5
+    }
 }

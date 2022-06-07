@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using static Define;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -51,6 +53,12 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    #region 스테이지 로딩 관련 부분들
+    [Header("스테이지 데이터들")]
+    public List<RoomListSO> stages;
+    private Room _currentRoom = null; //현재 있는 방
+    #endregion
+
     private void Awake()
     {
         if (Instance != null)
@@ -66,7 +74,25 @@ public class GameManager : MonoBehaviour
 
         Instantiate(_textureParticleManagerPrefab, transform.parent);
 
-        UIManager.Instance = new UIManager(); 
+        UIManager.Instance = new UIManager();
+
+        RoomManager.Instance = new RoomManager(); //룸매니저 생성
+        int bossCnt = Random.Range(8, 12);  // 총 방을 8개에서 10개 사이를 지나면 보스가 등장하도록 한다.
+
+        RoomManager.Instance.InitStage(stages[0], bossCnt);
+
+        _currentRoom = GameObject.FindObjectOfType<Room>(); //최초 생성되어 있는 룸이 있는지를 체크
+        if(_currentRoom == null)
+        {
+            Room room = RoomManager.Instance.LoadStartRoom();
+            ChangeRoom(room); //방전환 실시
+        }else
+        {
+            PlayerTrm.position = _currentRoom.StartPosition;
+            RoomManager.Instance.SetRoomDoorDestination(_currentRoom);
+            _currentRoom.ActiveRoom();
+        }
+
 
         SetCursorIcon();
         CreatePool();
@@ -89,5 +115,24 @@ public class GameManager : MonoBehaviour
     public float CriticalMinDamage { get => PlayerStatus.criticalMinDmg; }
     public float CriticalMaxDamage { get => PlayerStatus.criticalMaxDmg; }
 
+    #region 룸 변경 관련 로직들
+    public void LoadNextRoom(RoomType type)
+    {
+        Room room = RoomManager.Instance.LoadNextRoom(type);
+        ChangeRoom(room);
+    }
 
+    private void ChangeRoom(Room newRoom)
+    {
+        if(_currentRoom != null)
+        {
+            Destroy(_currentRoom.gameObject);
+        }
+
+        newRoom.transform.position = Vector3.zero;
+        PlayerTrm.position = newRoom.StartPosition;
+        _currentRoom = newRoom;
+        _currentRoom.ActiveRoom();
+    }
+    #endregion
 }

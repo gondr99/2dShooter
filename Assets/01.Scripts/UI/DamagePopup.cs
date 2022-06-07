@@ -11,7 +11,7 @@ public class DamagePopup : PoolableMono
         _textMesh = GetComponent<TextMeshPro>();
     }
 
-    public void Setup(int damageAmount, Vector3 pos, bool isCritical)
+    public void Setup(int damageAmount, Vector3 pos, bool isCritical, Color color)
     {
         transform.position = pos;
         _textMesh.SetText(damageAmount.ToString());
@@ -20,6 +20,9 @@ public class DamagePopup : PoolableMono
         {
             _textMesh.color = Color.red;
             _textMesh.fontSize = 12f;
+        }else
+        {
+            _textMesh.color = color;
         }
 
         Sequence seq = DOTween.Sequence();

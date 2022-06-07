@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,6 +36,20 @@ public class GameManager : MonoBehaviour
             return _player.PlayerStatus;
         }
     }
+
+    #region 코인 데이터 관련부분
+    public UnityEvent<int> OnCoinUpdate = null;
+    private int _coinCnt;
+    public int Coin
+    {
+        get => _coinCnt;
+        set
+        {
+            _coinCnt = value;
+            OnCoinUpdate?.Invoke(_coinCnt);
+        }
+    }
+    #endregion
 
     private void Awake()
     {

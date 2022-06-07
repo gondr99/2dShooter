@@ -32,10 +32,12 @@ public class EnemySpawner : MonoBehaviour
     private AudioSource _audioSource;
     private bool _isOpen = false;
     private HealthBar _healthBar;
+    
+    [Header("포탈 상태 및 이벤트")]
     [SerializeField]
     private bool _sensorActive = false, _passiveActive = false;
-
     // passiveActive가 true이면 플레이어 접근여부와 상관없이 바로 활성화된다.
+    public UnityEvent OnClosePortal = null; //포탈이 닫힐때 발생하는 이벤트
     
     
 
@@ -138,7 +140,8 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator DestroyPortal()
     {
         yield return new WaitForSeconds(2f);
-        //여기에 아이템 드랍로직 추가
+        
+        OnClosePortal?.Invoke();
 
         gameObject.SetActive(false); //Destroy해버려도 된다.
     }

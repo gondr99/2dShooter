@@ -51,7 +51,7 @@ public class Enemy : PoolableMono, IAgent, IHittable, IKnockback
 
         //여기에 데미지 숫자 띄워주는 로직이 들어가야 한다.
         DamagePopup popup = PoolManager.Instance.Pop("DamagePopup") as DamagePopup;
-        popup.Setup(damage, transform.position + new Vector3(0,0.5f,0), isCritical);
+        popup.Setup(damage, transform.position + new Vector3(0,0.5f,0), isCritical, Color.white);
 
 
         if(Health <= 0)

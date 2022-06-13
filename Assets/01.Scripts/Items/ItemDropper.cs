@@ -1,8 +1,10 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ItemDropper : MonoBehaviour
 {
@@ -32,9 +34,17 @@ public class ItemDropper : MonoBehaviour
         if(dropVariable < _dropChance) //드랍율에 걸렸다면 아이템 드랍
         {
             int idx = GetRandomWeightedIndex();
-            PoolableMono resource = PoolManager.Instance.Pop(_dropTable.dropList[idx].itemPrefab.name);
+            Resource resource = PoolManager.Instance.Pop(_dropTable.dropList[idx].itemPrefab.name) as Resource;
 
             resource.transform.position = transform.position;
+
+            Action destroyAction = null;
+            destroyAction = () =>
+            {
+                resource.DestroyResource();
+                GameManager.Instance.OnClearAllDropItems -= destroyAction;
+            };
+            GameManager.Instance.OnClearAllDropItems += destroyAction;
 
             if(_dropEffect)
             {

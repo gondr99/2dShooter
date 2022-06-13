@@ -19,11 +19,18 @@ public class TorchAnimation : MonoBehaviour
 
     private Light2D _light;
 
+    private Sequence seq = null;
+
     private void Awake()
     {
         _light = GetComponentInChildren<Light2D>();
         _baseIntensity = _light.intensity;
         _baseRadius = _light.pointLightOuterRadius;
+    }
+
+    private void OnDestroy()
+    {
+        seq?.Kill();
     }
 
     private void OnEnable()
@@ -40,7 +47,7 @@ public class TorchAnimation : MonoBehaviour
         if (!gameObject.activeSelf)
             return;
 
-        Sequence seq = DOTween.Sequence();
+        seq = DOTween.Sequence();
         seq.Append(DOTween.To(
             () => _light.intensity,
             value => _light.intensity = value,

@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour
     private Room _currentRoom = null; //현재 있는 방
     #endregion
 
+    public Action OnClearAllDropItems = null;
+
     private void Awake()
     {
         if (Instance != null)
@@ -128,6 +130,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(_currentRoom.gameObject);
         }
+
+        TextureParticleManager.Instance.ClearAllParticle();
+        OnClearAllDropItems?.Invoke();
 
         newRoom.transform.position = Vector3.zero;
         PlayerTrm.position = newRoom.StartPosition;

@@ -35,6 +35,12 @@ public class Resource : PoolableMono
         PoolManager.Instance.Push(this);
     }
 
+    public void DestroyResource()
+    {
+        gameObject.SetActive(false);
+        PoolManager.Instance.Push(this);
+    }
+
     public override void Reset()
     {
         _spriteRenderer.enabled = true;

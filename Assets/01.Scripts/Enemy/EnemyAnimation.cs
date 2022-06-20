@@ -6,6 +6,7 @@ public class EnemyAnimation : AgentAnimation
 {
     protected EnemyAIBrain _enemyAIBrain;
     protected readonly int _attackHashStr = Animator.StringToHash("Attack");
+    protected readonly int _jumpdownHashStr = Animator.StringToHash("Jumpdown");
 
     //나중에 공격애니메이션이 있는 적들은 만들 예정
 
@@ -22,5 +23,10 @@ public class EnemyAnimation : AgentAnimation
     public void PlayAttackAnimation()
     {
         _agentAnimator.SetTrigger(_attackHashStr);
+    }
+
+    public void PlayJumpdownAnimation()
+    {
+        _agentAnimator.SetTrigger(_jumpdownHashStr);
     }
 }

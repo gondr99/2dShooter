@@ -87,9 +87,11 @@ public class GameManager : MonoBehaviour
         if(_currentRoom == null)
         {
             Room room = RoomManager.Instance.LoadStartRoom();
+            room.LoadRoomData();
             ChangeRoom(room); //방전환 실시
         }else
         {
+            _currentRoom.LoadRoomData();
             PlayerTrm.position = _currentRoom.StartPosition;
             RoomManager.Instance.SetRoomDoorDestination(_currentRoom);
             _currentRoom.ActiveRoom();

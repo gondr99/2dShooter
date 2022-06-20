@@ -16,6 +16,8 @@ public class ItemDropper : MonoBehaviour
     private bool _dropEffect = false; //점핑이펙트
 
     [SerializeField]
+    private float _dropPower = 2f;
+    [SerializeField]
     [Range(0, 1f)]
     private float _dropChance; //이 몹? 의 아이템의 드랍확률
 
@@ -50,7 +52,7 @@ public class ItemDropper : MonoBehaviour
             {
                 Vector3 offset = Random.insideUnitCircle;
 
-                resource.transform.DOJump(transform.position + offset, 1f, 1, 0.3f);
+                resource.transform.DOJump(transform.position + offset, _dropPower, 1, 0.3f);
             }
         }
         // 아니면 아무것도 안뱉음.

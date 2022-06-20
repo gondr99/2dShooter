@@ -25,6 +25,10 @@ public class Door : MonoBehaviour
         set
         {
             _nextRoom = value;
+            if(_iconRenderer == null )
+            {
+                _iconRenderer = transform.Find("Category/Icon").GetComponent<SpriteRenderer>();
+            }
             _iconRenderer.sprite = _iconSo.sprites[(int)value];
         }
     }
@@ -34,8 +38,6 @@ public class Door : MonoBehaviour
         _openTrm = transform.Find("Open");
         _closeTrm = transform.Find("Closed");
         _audioSource = GetComponent<AudioSource>();
-
-        _iconRenderer = transform.Find("Category/Icon").GetComponent<SpriteRenderer>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

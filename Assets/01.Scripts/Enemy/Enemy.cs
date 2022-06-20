@@ -9,12 +9,13 @@ public class Enemy : PoolableMono, IAgent, IHittable, IKnockback
     [SerializeField] private EnemyDataSO _enemytData;
     public EnemyDataSO EnemyData => _enemytData;
 
-    private bool _isDead = false;
-    private AgentMovement _agentMovement; //차후 넉백처리하려고 미리 가져온다.
-    private EnemyAnimation _enemyAnimation;
-    private EnemyAttack _enemyAttack;
-    private CapsuleCollider2D _collider;
+    protected bool _isDead = false;
+    protected AgentMovement _agentMovement; //차후 넉백처리하려고 미리 가져온다.
+    protected EnemyAnimation _enemyAnimation;
+    protected EnemyAttack _enemyAttack;
+    protected CapsuleCollider2D _collider;
 
+    protected EnemyAIBrain _enemyBrain;
 
     //죽었을때 처리할 것과
     //액티브 상태를 관리할 애가
@@ -28,7 +29,7 @@ public class Enemy : PoolableMono, IAgent, IHittable, IKnockback
     public bool IsEnemy => true;
     public Vector3 HitPoint { get; private set; }
 
-    public void GetHit(int damage, GameObject damageDealer)
+    public virtual void GetHit(int damage, GameObject damageDealer)
     {
         if (_isDead) return;
         //안죽었으면 여기다가 피격 관련 로직 작성
@@ -65,7 +66,7 @@ public class Enemy : PoolableMono, IAgent, IHittable, IKnockback
     #endregion
 
     [SerializeField]
-    private bool _isActive = false;
+    protected bool _isActive = false;
 
     private void Awake()
     {
@@ -74,9 +75,10 @@ public class Enemy : PoolableMono, IAgent, IHittable, IKnockback
         _enemyAttack = GetComponent<EnemyAttack>();
         _collider = GetComponent<CapsuleCollider2D>();
         _enemyAttack.attackDelay = _enemytData.attackDelay;
+        _enemyBrain = GetComponent<EnemyAIBrain>();
     }
 
-    public void PerformAttack()
+    public virtual void PerformAttack()
     {
         if (_isDead == false && _isActive == true)
         {

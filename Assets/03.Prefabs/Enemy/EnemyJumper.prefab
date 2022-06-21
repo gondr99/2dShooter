@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6395941}
   - component: {fileID: 6395943}
   - component: {fileID: 6395942}
+  - component: {fileID: 6395944}
   m_Layer: 7
   m_Name: FeedbackNeutral
   m_TagString: Untagged
@@ -49,6 +50,7 @@ MonoBehaviour:
   _feedbackToPlay:
   - {fileID: 6395943}
   - {fileID: 6395942}
+  - {fileID: 6395944}
 --- !u!114 &6395943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,6 +93,19 @@ MonoBehaviour:
   - {fileID: -6773729642839297075, guid: 10637008af11faf4d83f77135eef3763, type: 3}
   - {fileID: -461251526856811233, guid: 10637008af11faf4d83f77135eef3763, type: 3}
   - {fileID: 4597969388650312813, guid: 10637008af11faf4d83f77135eef3763, type: 3}
+--- !u!114 &6395944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6395939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 621752a5bfebd3a4f990f0b8bf9ece92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _neutralMat: {fileID: 2100000, guid: d18d92016aec6264b8d168f6ee6cc50e, type: 2}
 --- !u!1 &2087141219
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,7 +909,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _isActive: 1
-  _neutralDamage: 10
+  _neutralDamage: 70
   _neutralTime: 3
   OnNeutralHit:
     m_PersistentCalls:
@@ -1200,7 +1215,7 @@ MonoBehaviour:
   - {x: -0.44083536, y: -0.03867346, z: 0}
   m_ShapePathHash: 1803454005
   m_Mesh: {fileID: 0}
-  m_InstanceId: 21416
+  m_InstanceId: -1890
 --- !u!114 &6127068320120349665
 MonoBehaviour:
   m_ObjectHideFlags: 0

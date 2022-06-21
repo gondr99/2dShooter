@@ -75,6 +75,7 @@ public class AgentMovement : MonoBehaviour
         if(_isKnockback == false)
         {
             _isKnockback = true;
+            StopImmediatelly();
             _knockbackCo = StartCoroutine(KnockbackCoroutine(direction, power, duration));
         }
     }

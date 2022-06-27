@@ -29,7 +29,7 @@ public class Hand : MonoBehaviour, IHittable
 
     [SerializeField] private int _damage;
     [SerializeField] private float _atkRadius = 3f, _knockPower, _flapPower, _flapDistance;
-    [SerializeField] private bool _isFlapping; //파리채 공격중일때 사용할 예정
+    [SerializeField] private bool _isLeftHand, _isFlapping; //파리채 공격중일때 사용할 예정
 
     Sequence seq = null;
     public UnityEvent OnAttack = null;
@@ -99,6 +99,35 @@ public class Hand : MonoBehaviour, IHittable
 
     #endregion
 
+    #region 파리채 공격
+
+    public void AttackFlapperSequence(Vector3 targetPos, Action Callback)
+    {
+        Vector3 atkPos = targetPos - _attackPosTrm.localPosition; //델타만큼 빼준다.
+        seq = DOTween.Sequence();
+
+        seq.Append(transform.DOMoveY(atkPos.y, 0.4f));
+        seq.AppendInterval(0.2f);
+        seq.AppendCallback(() =>
+        {
+            _animator.SetTrigger(_hashFlapperAttack);//손바닥 애니메이션 재생
+            _isFlapping = true; //휘두르기 시작
+            OnFlap?.Invoke(); //휘두르는 사운드 등 피드백 재생
+        });
+
+        float x = _isLeftHand ? -1f : 1f;
+        float targetX = transform.position.x + x * _flapDistance;
+        seq.Join(transform.DOMoveX(targetX, 0.7f));
+        seq.AppendInterval(0.3f);
+        seq.AppendCallback(() =>
+        {
+            _isFlapping = false;  //휘두르는거 끝
+        });
+        seq.Join(transform.DOMove(_initPosition, 0.3f));
+        seq.AppendCallback(() => Callback?.Invoke());
+    }
+
+    #endregion
     private void OnDisable()
     {
         seq?.Kill();
@@ -116,6 +145,10 @@ public class Hand : MonoBehaviour, IHittable
         if(Input.GetKeyDown(KeyCode.P))
         {
             AttackShockSequence(Vector3.zero, null);
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            AttackFlapperSequence(Vector3.zero, null);
         }
     }
 

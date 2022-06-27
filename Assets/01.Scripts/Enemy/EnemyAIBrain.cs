@@ -18,7 +18,7 @@ public class EnemyAIBrain : MonoBehaviour, IAgentInput
     private AIActionData _aiActionData;
     public AIActionData AIActionData => _aiActionData;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _aiActionData = transform.Find("AI").GetComponent<AIActionData>();
     }
